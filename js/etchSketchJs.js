@@ -1,9 +1,32 @@
 const container = document.querySelector(".container");
 const clearButton = document.querySelector(".clear");
 const resizeButton = document.querySelector(".resize");
+const rainbowButton = document.querySelector(".rainbow");
+const blackButton = document.querySelector(".black");
+const eraserButton = document.querySelector(".eraser");
+
+let rainbow = false;
+let eraser = false;
 
 clearButton.addEventListener('click', clearBoard);
 resizeButton.addEventListener('click', resize);
+rainbowButton.addEventListener('click', rainbowOn);
+blackButton.addEventListener('click', blackOn);
+eraserButton.addEventListener('click', eraserOn);
+
+function rainbowOn(){
+    rainbow = true;
+    eraser = false;
+}
+
+function blackOn(){
+    rainbow = false;
+    eraser = false;
+}
+
+function eraserOn(){
+    eraser = true;
+}
 
 function createBoard(size){
     let squareSize = 480 / size;
@@ -19,11 +42,15 @@ function createBoard(size){
 function draw(){
     let allSquares = document.querySelectorAll(".square");
     allSquares.forEach(square => square.addEventListener('mouseover', () => {
-        if(square.style.backgroundColor != 'black'){
-        square.style.backgroundColor = 'black';
+        if(eraser){
+            square.style.backgroundColor = 'white';
+        }
+        else if(rainbow){ 
+            square.style.backgroundColor = ('RGB('+ (Math.floor(Math.random() * 255)) + "," + Math.floor(Math.random() * 255) + 
+            "," + Math.floor(Math.random() * 255) + ")");
         }
         else{
-            //square.style.backgroundColor = 'white';
+            square.style.backgroundColor = 'black';
         }
     }) )
 }
@@ -38,17 +65,19 @@ function clearBoard(){
 function resize(){
     clearBoard;
     var newBoardSize = window.prompt("Enter the number of squares per side of the board");
-    resetDivs();
+    while(newBoardSize > 100){
+        newBoardSize = window.prompt("Enter the number of squares per side of the board. Smaller than 100");
+    }
+    document.querySelectorAll('.square').forEach(square => square.remove());
     createBoard(newBoardSize);
     draw();
 }
 
-function resetDivs(){
-    document.querySelectorAll('.square').forEach(e => e.remove());
-}
-
 function start(){ 
     var boardSize = window.prompt("Enter the number of squares per side of the board");
+    while(boardSize > 100){
+        boardSize = window.prompt("Enter the number of squares per side of the board. Smaller than 100");
+    }
     createBoard(boardSize);
 }
 
