@@ -4,9 +4,11 @@ const resizeButton = document.querySelector(".resize");
 const rainbowButton = document.querySelector(".rainbow");
 const blackButton = document.querySelector(".black");
 const eraserButton = document.querySelector(".eraser");
+const annoucmentDiv = document.querySelector(".announcement");
 
 let rainbow = false;
 let eraser = false;
+let annoucmentText = "";
 
 clearButton.addEventListener('click', clearBoard);
 resizeButton.addEventListener('click', resize);
@@ -17,15 +19,20 @@ eraserButton.addEventListener('click', eraserOn);
 function rainbowOn(){
     rainbow = true;
     eraser = false;
+    annoucmentText = "Rainbow";
 }
 
 function blackOn(){
     rainbow = false;
     eraser = false;
+    annoucmentText = "Black";
+
 }
 
 function eraserOn(){
     eraser = true;
+    annoucmentText = "Eraser";
+
 }
 
 function createBoard(size){
@@ -44,13 +51,18 @@ function draw(){
     allSquares.forEach(square => square.addEventListener('mouseover', () => {
         if(eraser){
             square.style.backgroundColor = 'white';
+            document.getElementById("announcement").innerHTML = "Eraser Mode";
         }
         else if(rainbow){ 
             square.style.backgroundColor = ('RGB('+ (Math.floor(Math.random() * 255)) + "," + Math.floor(Math.random() * 255) + 
             "," + Math.floor(Math.random() * 255) + ")");
+            document.getElementById("announcement").innerHTML = "Rainbow Mode";
+
         }
         else{
             square.style.backgroundColor = 'black';
+            document.getElementById("announcement").innerHTML = "Black Mode";
+
         }
     }) )
 }

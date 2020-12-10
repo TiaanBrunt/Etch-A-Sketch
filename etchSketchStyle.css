@@ -1,6 +1,9 @@
-h1{
+h1, #announcement{
     display: flex;
     justify-content: center;
+}
+
+h1{
     color:purple;
 }
 
@@ -14,7 +17,7 @@ h1{
 
 }
 
-.controls{
+.controls, #announcement{
     margin-bottom: 20px;
 }
 
